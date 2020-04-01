@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android --variant=devDebug --appId=com.test.dev",
+    "android-prod": "react-native run-android --variant=prodDebug --appId=com.test.prod",
     "ios": "react-native run-ios --scheme='RNTemplate'",
     "ios-prod": "react-native run-ios --scheme='RNTemplateProd'",
     "start": "react-native start",
@@ -11,6 +12,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.7",
     "axios": "^0.19.2",
     "class-transformer": "^0.2.3",
