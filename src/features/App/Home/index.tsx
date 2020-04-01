@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Theme, ThemeProvider } from '@src/theme';
 import { AppScreen, List, TouchableOpacity, Container, Header, DropDownButton } from '@src/components';
 import { observer } from 'mobx-react';
@@ -7,6 +7,7 @@ import { observable } from 'mobx';
 import Services, { User } from '@src/api/Services';
 import { ActionSheetProvider } from '@src/navigation/ActionSheetProvider';
 import DeviceInfo from 'react-native-device-info';
+import Configs from '@src/constants/Configs';
 
 const { width, height } = Dimensions.get('window');
 console.log('device dimensions: ', width, height);
@@ -50,7 +51,6 @@ export class HomeScreen extends AppScreen {
 
   render(): JSX.Element {
     const appStyles = this.useStyles(styles);
-    console.log('selected', this.state.selectedOption);
     return (
       <Container>
         <Header title="Hello you" />
@@ -58,16 +58,19 @@ export class HomeScreen extends AppScreen {
           <View style={{}}>
             <Text>Version: {DeviceInfo.getReadableVersion()}</Text>
             <Text>{this.t('SPLASH_SCREEN.TITLE')}</Text>
+            <Text>{Configs.API_URL}</Text>
             <TouchableOpacity onPress={this._handlePress}>
               <Text>Click me</Text>
             </TouchableOpacity>
+            {!!this.user && <Text>{this.user.email}</Text>}
             <TouchableOpacity style={appStyles.container} onPress={this._handlePress2}>
-              <Text>Click me</Text>
+              <Text>Change theme</Text>
             </TouchableOpacity>
+            <View style={{ height: 500 }} />
             <DropDownButton
               data={Array.from({ length: 3 }).map((_, index) => ({
                 key: String(index),
-                value: `Donate ${index + 1}k`,
+                value: `Row ${index + 1}`,
               }))}
               // @ts-ignore
               selectedOption={this.state.selectedOption}
@@ -89,7 +92,8 @@ export class HomeScreen extends AppScreen {
 const styles = ({ colors }: Theme) =>
   StyleSheet.create({
     container: {
-      height: 1000,
+      padding: 8,
+      alignSelf: 'center',
       backgroundColor: colors.backgroundColor,
     },
     btn: {},

@@ -163,6 +163,7 @@ export class DropDownButton extends BasePureComponent<DropDownButtonProps, DropD
     const styles = this.useStyles(appStyles);
     return (
       <TouchableOpacity
+        activeOpacity={0.7}
         disabled={isLoadingData}
         onPress={this._handlePress}
         ref={(r) => (this.view = r)}
