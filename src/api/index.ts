@@ -1,19 +1,15 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import { BaseError } from '@src/errors';
 import { plainToClass } from 'class-transformer';
-
-const Urls = {
-  HOST: '',
-};
+import Configs from '@src/constants/Configs';
 
 const client = axios.create({
-  baseURL: Urls.HOST,
+  baseURL: Configs.API_URL,
   timeout: 60 * 1000,
   // other configs
 });
 
 client.interceptors.request.use((config) => {
-  // tạo cái headers trong trường hợp nó null
   config.headers = {
     ...config.headers,
   };
@@ -21,8 +17,9 @@ client.interceptors.request.use((config) => {
 });
 
 const onSuccess = (response: AxiosResponse) => {
-  return Promise.resolve(response.data);
   console.log('response', response);
+  return Promise.resolve(response.data);
+  // depends on the back end
   if (response.data.erroCode === 0) {
     return Promise.resolve(response.data.data);
   }

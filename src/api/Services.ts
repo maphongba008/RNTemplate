@@ -1,25 +1,7 @@
 import client from '.';
-import { observable } from 'mobx';
-import { Expose } from 'class-transformer';
+import { User } from '@src/stores/User';
 
-export class User {
-  @Expose()
-  id = 0;
-  @Expose()
-  @observable
-  @Expose()
-  name = '';
-  @Expose()
-  email = '';
-  @Expose()
-  website = '';
-
-  get fullName() {
-    return this.name + 'ahihi';
-  }
-}
-
-export class Services {
+class Services {
   fetchUsers = (): Promise<User[]> => {
     return client.get('https://jsonplaceholder.typicode.com/users', User);
   };

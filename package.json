@@ -36,6 +36,7 @@
     "react-navigation-stack": "^1.8.0",
     "reactotron-react-native": "^5.0.0",
     "reflect-metadata": "^0.1.13",
+    "rn-placeholder": "^3.0.0",
     "rn-scaled-sheet": "^1.0.4"
   },
   "devDependencies": {

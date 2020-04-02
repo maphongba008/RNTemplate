@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import { Theme, ThemeProvider } from '@src/theme';
-import { AppScreen, List, TouchableOpacity, Container, Header, DropDownButton } from '@src/components';
-import { observer } from 'mobx-react';
+import { AppScreen, List, TouchableOpacity, Container, Header, DropDownButton, Box, LoadingRow } from '@src/components';
+import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
-import Services, { User } from '@src/api/Services';
 import { ActionSheetProvider } from '@src/navigation/ActionSheetProvider';
 import DeviceInfo from 'react-native-device-info';
 import Configs from '@src/constants/Configs';
@@ -12,16 +11,13 @@ import Configs from '@src/constants/Configs';
 const { width, height } = Dimensions.get('window');
 console.log('device dimensions: ', width, height);
 
+@inject('appStore')
 @observer
 export class HomeScreen extends AppScreen {
   @observable showModal = false;
-  @observable user: User | undefined = undefined;
 
   _handlePress = () => {
-    Services.fetchUsers().then((users) => {
-      this.user = users[0];
-      console.log(this.user);
-    });
+    this.props.appStore.fetchUsers();
   };
 
   _handlePress2 = () => {
@@ -51,18 +47,33 @@ export class HomeScreen extends AppScreen {
 
   render(): JSX.Element {
     const appStyles = this.useStyles(styles);
+    const { usersLoader } = this.props.appStore;
     return (
       <Container>
         <Header title="Hello you" />
+        <View style={{ height: 200 }}>
+          <List
+            keyExtractor={(user) => String(user.id)}
+            isLoading={usersLoader.isLoading}
+            loadingComponent={() => <LoadingRow />}
+            // loadingText="Loading users"
+            data={usersLoader.data}>
+            {(user) => (
+              <Box>
+                <Text>{user.name}</Text>
+                <Text>{user.email}</Text>
+              </Box>
+            )}
+          </List>
+        </View>
         <ScrollView>
           <View style={{}}>
             <Text>Version: {DeviceInfo.getReadableVersion()}</Text>
             <Text>{this.t('SPLASH_SCREEN.TITLE')}</Text>
             <Text>{Configs.API_URL}</Text>
-            <TouchableOpacity onPress={this._handlePress}>
-              <Text>Click me</Text>
+            <TouchableOpacity style={appStyles.container} onPress={this._handlePress}>
+              <Text>Test API</Text>
             </TouchableOpacity>
-            {!!this.user && <Text>{this.user.email}</Text>}
             <TouchableOpacity style={appStyles.container} onPress={this._handlePress2}>
               <Text>Change theme</Text>
             </TouchableOpacity>
@@ -95,6 +106,7 @@ const styles = ({ colors }: Theme) =>
       padding: 8,
       alignSelf: 'center',
       backgroundColor: colors.backgroundColor,
+      marginTop: 10,
     },
     btn: {},
   });

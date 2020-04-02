@@ -6,6 +6,8 @@ import '@src/locale/i18n';
 import { ActionSheetProvider } from './ActionSheetProvider';
 import { ThemeProvider } from '@src/theme';
 import NavigationService from './NavigationService';
+import { Provider } from 'mobx-react';
+import AppStore from '@src/stores/AppStore';
 
 interface WrappedStackProps {
   t: (text: string) => string;
@@ -38,10 +40,12 @@ export default class extends React.Component {
   render(): JSX.Element {
     return (
       <ThemeProvider>
-        <View style={{ flex: 1 }}>
-          <ReloadAppOnLanguageChange />
-          <ActionSheetProvider />
-        </View>
+        <Provider appStore={AppStore}>
+          <View style={{ flex: 1 }}>
+            <ReloadAppOnLanguageChange />
+            <ActionSheetProvider />
+          </View>
+        </Provider>
       </ThemeProvider>
     );
   }
