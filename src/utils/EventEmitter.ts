@@ -13,7 +13,7 @@ export const Keys = {
 export default class EventEmitter {
   static _registerEvents: Array<Event> = [];
 
-  static notify = (type: string, data: Data) => {
+  static notify = (type: string, data?: any) => {
     EventEmitter._registerEvents
       .filter((event) => event.type === type)
       .forEach((event) => {

@@ -8,6 +8,8 @@ import { ThemeProvider } from '@src/theme';
 import NavigationService from './NavigationService';
 import { Provider } from 'mobx-react';
 import AppStore from '@src/stores/AppStore';
+import PopupController from './PopupController';
+import LoadingHud from './LoadingHud';
 
 interface WrappedStackProps {
   t: (text: string) => string;
@@ -46,6 +48,8 @@ export default class extends React.Component {
             <ActionSheetProvider />
           </View>
         </Provider>
+        <PopupController />
+        <LoadingHud />
       </ThemeProvider>
     );
   }

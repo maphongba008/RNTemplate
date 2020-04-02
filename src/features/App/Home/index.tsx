@@ -7,6 +7,8 @@ import { observable } from 'mobx';
 import { ActionSheetProvider } from '@src/navigation/ActionSheetProvider';
 import DeviceInfo from 'react-native-device-info';
 import Configs from '@src/constants/Configs';
+import PopupController from '@src/navigation/PopupController';
+import LoadingHud from '@src/navigation/LoadingHud';
 
 const { width, height } = Dimensions.get('window');
 console.log('device dimensions: ', width, height);
@@ -39,6 +41,30 @@ export class HomeScreen extends AppScreen {
         isCancel: true,
       },
     ]);
+  };
+
+  _handlePress3 = () => {
+    PopupController.showPopup({
+      title: 'Vel turpis nunc eget lorem dolor sed viverra ipsum nunc',
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio aenean sed adipiscing diam. Odio aenean sed adipiscing diam.',
+      canDismiss: true,
+      buttons: [
+        {
+          text: 'Button 1',
+        },
+        {
+          text: 'Button 2',
+        },
+      ],
+    });
+  };
+
+  _handlePress4 = () => {
+    LoadingHud.show();
+    setTimeout(() => {
+      LoadingHud.hide();
+    }, 3000);
   };
 
   state = {
@@ -76,6 +102,12 @@ export class HomeScreen extends AppScreen {
             </TouchableOpacity>
             <TouchableOpacity style={appStyles.container} onPress={this._handlePress2}>
               <Text>Change theme</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={appStyles.container} onPress={this._handlePress3}>
+              <Text>Show alert</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={appStyles.container} onPress={this._handlePress4}>
+              <Text>Show hud</Text>
             </TouchableOpacity>
             <View style={{ height: 500 }} />
             <DropDownButton
