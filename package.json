@@ -17,7 +17,7 @@
     "axios": "^0.19.2",
     "class-transformer": "^0.2.3",
     "i18next": "11.9.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "moment": "^2.24.0",
