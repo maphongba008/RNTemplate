@@ -15,7 +15,7 @@
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.7",
     "axios": "^0.19.2",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "i18next": "11.9.0",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
